@@ -1,6 +1,10 @@
 const controle = document.querySelectorAll("[data-controle]")
+	// busca todos elementos marcados pela data-atributtes data-controle
+	
 const estatistica = document.querySelectorAll("[data-estatistica]")
-
+	// busca todos elementos marcados pelo data-atributtes data-controle
+	
+//Abaixo temos objetos em lista de valores que serão somados às características do robô
 const pecas = {
     "bracos": {
         "forca": 29,
@@ -36,17 +40,26 @@ const pecas = {
 }
 
 controle.forEach( (elemento) => {
+	console.log(elemento)//lista todos botões contidos em controle
     elemento.addEventListener('click', (evento) => {
+		console.log(evento)//mostra todas informações contidas no botão clicado
         manipulaDados(evento.target.textContent, evento.target.parentNode)
+		//no html corresponde ao "-" ou o "+"  || correspode a todo elemento pai 
+		//(no caso enviado para a função manipulaDados)
+		
         atualizaEstatistica(evento.target.dataset.peca)
+		//envia para a função apenas o dado contido no caminho especificado, 
+		//esse caminho chega até o nome da peça que é enviado
     })
 })
 
 function manipulaDados(operacao, controle) {
     const peca = controle.querySelector("[data-contador]")
+		//recebido o elemento pai, busca dentro dele a linha html com o data-contador
 
     if(operacao === "-") {
-        peca.value = parseInd(peca.value) - 1
+        peca.value = parseInt(peca.value) - 1
+		//altera o valor do value do elemento || parseInt converte String em número para efetuar o cálculo
     } else {
         peca.value = parseInt(peca.value) + 1
     }
@@ -54,6 +67,10 @@ function manipulaDados(operacao, controle) {
 
 function atualizaEstatistica(peca) {
     estatistica.forEach( (elemento ) => {
+	//forEach percorre todos elementos contidos na variável estatistica efetuando o cálculo de cada atributo
+		console.log(elemento)
         elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
+	;//texto visível do elemento no html = texto convertido em string + 
+			//variável pecas/nomeDaPecaRecebidoNaFuncao/nome do elemento contido no data-estatistica do html
     })
 }
